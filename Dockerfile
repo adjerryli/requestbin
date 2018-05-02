@@ -20,9 +20,8 @@ RUN pip install -r /opt/requestbin/requirements.txt \
 # the code
 ADD requestbin  /opt/requestbin/requestbin/
 
-EXPOSE 8000
+EXPOSE 443
 
 WORKDIR /opt/requestbin
-CMD gunicorn -b 0.0.0.0:8000 --worker-class gevent --workers 2 --max-requests 1000 requestbin:app
-
-
+CMD gunicorn -b 0.0.0.0:443 --worker-class gevent --workers 2 --max-requests 1000 requestbin:app --certfile=/etc/server.crt \
+--keyfile=/etc/server.key --ssl-version=3
